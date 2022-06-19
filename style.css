@@ -1,0 +1,70 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main { 
+    width: 50vw;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Screen Screen AC DEL"
+      "seven eight nine plus"
+      "four five six substract"
+      "one two three multiply"
+      "zero decimal divide equal";
+  }
+  
+  .Screen { 
+    grid-area: Screen; 
+    border: solid 1px black;
+}
+  
+  .key{
+    border: solid 1px black;
+    text-align: center;
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  #AC { grid-area: AC; }
+  
+  #DEL { grid-area: DEL; }
+  
+  #seven { grid-area: seven; }
+  
+  #eight { grid-area: eight; }
+  
+  #nine { grid-area: nine; }
+  
+  #plus { grid-area: plus; }
+  
+  #four { grid-area: four; }
+  
+  #five { grid-area: five; }
+  
+  #six { grid-area: six; }
+  
+  #substract { grid-area: substract; }
+  
+  #one { grid-area: one; }
+  
+  #two { grid-area: two; }
+  
+  #three { grid-area: three; }
+  
+  #multiply { grid-area: multiply; }
+  
+  #zero { grid-area: zero; }
+  
+  #decimal { grid-area: decimal; }
+  
+  #divide { grid-area: divide; }
+  
+  #equal { grid-area: equal; }
+  
