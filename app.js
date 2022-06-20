@@ -1,28 +1,41 @@
 var buttons = document.querySelectorAll('.key');
 var controle = 0;
-var test= document.querySelector('.Screen').innerHTML;
-
-
+var doubleCheck = 1;
 
 function calcul(obj){
     return Function('return ' + obj)();
 }
 function deleteLastNumber(){
-    document.querySelector('.Screen').innerHTML = test.slice(0 , -1);
+    document.querySelector('.Screen').textContent = document.querySelector('.Screen').textContent.slice(0, -1);
 }
 function fullErase(){
     document.querySelector('.Screen').innerHTML = '';
 }
-
-
-
-
-
-
-
+function keyboardTryOperator(id){
+    switch (doubleCheck) {
+        case 1:
+            break;
+        default:
+            document.querySelector('.Screen').innerHTML += document.querySelector(id).innerHTML;
+            controle = 0;
+            doubleCheck = 1;
+            break;
+    }
+}
+function keyboardTryNumber(id){
+    switch (controle) {
+        case 0:
+            document.querySelector('.Screen').innerHTML += document.querySelector(id).innerHTML;
+            doubleCheck = 0;
+            break;
+        default:
+            document.querySelector('.Screen').innerHTML = document.querySelector(id).innerHTML;
+            controle = 0;
+            break;
+    }
+}
 for (let index = 0; index < buttons.length; index++) {
     const btn = buttons[index];
-    let test1= document.querySelector('.Screen').innerHTML;
     btn.addEventListener('click', function(){   
         if (this.innerHTML === " = ") {
             document.querySelector('.Screen').innerHTML = calcul(document.querySelector('.Screen').textContent);
@@ -37,28 +50,106 @@ for (let index = 0; index < buttons.length; index++) {
             fullErase();
             return;
         }
-        document.querySelector('.Screen').textContent += this.textContent;
-        if (controle === 1) {
-            document.querySelector('.Screen').innerHTML = this.textContent;
-            controle = 0;
+        switch (doubleCheck) {
+            case 1:
+                switch (btn.innerHTML) {
+                    case '+':
+                        break;
+                    case '-':
+                        break;
+                    case '*':
+                        break;
+                    case '/':
+                        break;
+                    case '.':
+                        break;
+                    default:
+                        document.querySelector('.Screen').innerHTML += btn.innerHTML;
+                        controle = 0;
+                        doubleCheck = 0;
+                        break;
+                }
+                break;
+            default:
+                switch (controle) {
+                    case 1:
+                        switch (btn.textContent) {
+                            case "+":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case "-":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case "/":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case "*":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case ".":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            default:
+                                document.querySelector('.Screen').innerHTML = btn.textContent;
+                                controle = 0;
+                                doubleCheck = 0;
+                                break;
+                        }
+                        break;
+                
+                    default:
+                        switch (btn.textContent) {
+                            case "+":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case "-":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;                            
+                            case "/":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            case "*":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;                            
+                            case ".":
+                                document.querySelector('.Screen').innerHTML += btn.textContent;
+                                controle = 0;
+                                doubleCheck = 1;
+                                break;
+                            default:
+                                document.querySelector('.Screen').textContent += this.textContent;
+                                controle = 0;
+                                doubleCheck = 0;
+                                break;
+                        }
+                        break;
+                }
+                break;
         }
-        console.log(controle);
-        console.log(test);
     })  
 }
-
 
 window.addEventListener('error', function(){
     this.alert("Vous avez entré une opération non valide, veuillez vérifier l'absence de répétition d'opérateurs ainsi que l'intégrité de l'opération")
 })
-
-
-
-
-
-
-
-
 
 // Bonus Touches
 
@@ -67,146 +158,58 @@ window.addEventListener('keydown', function(event){
         deleteLastNumber();
     }
     if (event.code === "NumpadDecimal"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#decimal').innerHTML
+        keyboardTryOperator('#decimal');
     }
     if (event.code === "NumpadAdd"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#plus').innerHTML
+        keyboardTryOperator('#plus');
     }
     if (event.code === "NumpadDivide"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#divide').innerHTML
+        keyboardTryOperator('#divide');
     }
     if (event.code === "NumpadMultiply"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#multiply').innerHTML
+        keyboardTryOperator('#multiply');
     }
     if (event.code === "NumpadSubtract"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#substract').innerHTML
+        keyboardTryOperator('#substract');
     }
     if (event.code === "NumpadEnter" || event.code === "Enter"){
         document.querySelector('.Screen').innerHTML = calcul(document.querySelector('.Screen').innerHTML);
+        controle = 1;
+        doubleCheck = 0;
     }
     if (event.code === "Numpad0"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#zero').innerHTML
+        keyboardTryNumber('#zero');
     } 
     if (event.code === "Numpad1"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#one').innerHTML
+        keyboardTryNumber('#one');
     }
     if (event.code === "Numpad2"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#two').innerHTML
+        keyboardTryNumber('#two');
     } 
     if (event.code === "Numpad3"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#three').innerHTML
+        keyboardTryNumber('#three');
     } 
     if (event.code === "Numpad4"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#four').innerHTML
+        keyboardTryNumber('#four');   
     } 
     if (event.code === "Numpad5"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#five').innerHTML
+        keyboardTryNumber('#five');
     } 
     if (event.code === "Numpad6"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#six').innerHTML
+        keyboardTryNumber('#six');
     } 
     if (event.code === "Numpad7"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#seven').innerHTML
+        keyboardTryNumber('#seven');    
     } 
     if (event.code === "Numpad8"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#eight').innerHTML
+        keyboardTryNumber('#eight');   
     } 
     if (event.code === "Numpad9"){
-        document.querySelector('.Screen').innerHTML += document.querySelector('#nine').innerHTML
+        keyboardTryNumber('#nine');
     }  
     if (event.code === "Delete"){
         fullErase();
+        doubleCheck = 0;
+        controle = 0;
     }
 })
-
-
-
-
-//  Fonctions préparé pour alléger le code plus haut
-
-
-
-
-
-// -----------------------------------Legacy ---------------------------------
-
-
-// var zero = document.querySelector('zero')
-// var un = document.querySelector('one')
-// var deux = document.querySelector('two')
-// var trois = document.querySelector('three')
-// var quatre = document.querySelector('four')
-// var cinq = document.querySelector('five')
-// var six = document.querySelector('six')
-// var sept = document.querySelector('seven')
-// var huit = document.querySelector('eight')
-// var neuf = document.querySelector('nine')
-// var virgule = document.querySelector('decimal')
-// var del = document.querySelector('DEL')
-// var AC = document.querySelector('AC')
-// var equal = document.querySelector('equal')
-// var plus = document.querySelector('plus')
-// var divide = document.querySelector('divide')
-// var substract = document.querySelector('substract')
-// var multiply = document.querySelector('multiply')
-
-
-
-
-// ajout à la value du screen
-
-
-// zero.addEventListener('click', function(){
-//     addZero();
-// })
-// un.addEventListener('click', function(){
-//     addUn();
-// })
-// deux.addEventListener('click', function(){
-//     addDeux();
-// })
-// trois.addEventListener('click', function(){
-//     addTrois();
-// })
-// quatre.addEventListener('click', function(){
-//     addQuatre();
-// })
-// cinq.addEventListener('click', function(){
-//     addCinq();
-// })
-// six.addEventListener('click', function(){
-//     addSix();
-// })
-// sept.addEventListener('click', function(){
-//     addSept();
-// })
-// huit.addEventListener('click', function(){
-//     addHuit();
-// })
-// neuf.addEventListener('click', function(){
-//     addNeuf();
-// })
-// virgule.addEventListener('click', function(){
-//     addVirgule();
-// })
-// plus.addEventListener('click', function(){
-//     addPlus();
-// })
-// divide.addEventListener('click', function(){
-//     addDivide();
-// })
-// multiply.addEventListener('click', function(){
-//     addMultiply();
-// })
-// substract.addEventListener('click', function(){
-//     addSubstract();
-// })
-// del.addEventListener('click', function(){
-//     deleteLastNumber();
-// })
-// AC.addEventListener('click', function(){
-//     fullErase();
-// })
-// equal.addEventListener('click', function(){
-//     document.querySelector('.Screen').innerHTML = calcul(document.querySelector('.Screen').innerHTML);
-// })
